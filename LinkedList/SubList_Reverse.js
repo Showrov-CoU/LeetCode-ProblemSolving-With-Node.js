@@ -1,7 +1,3 @@
-/**
- * Time Complexity O(left + right) = O(right)
- * space Complexity O(1)
- */
 const readline = require("readline");
 const rl = readline.createInterface(process.stdin, process.stdout);
 
@@ -60,7 +56,7 @@ const reverseBetween = ({ head }, left, right) => {
 };
 
 //?   create Linked list based on LinkedList and Node class
-const createLinkedList = (values, range) => {
+const createLinkedList = (size, values, range) => {
   let list = new LinkedList();
   list.add(0);
   for (let value of values) {
@@ -69,6 +65,15 @@ const createLinkedList = (values, range) => {
   let [left, right] = range;
   let reverseList = reverseBetween(list, left, right);
   console.log(reverseList);
+};
+
+const getSize = () => {
+  return new Promise((resolve) => {
+    rl.question("", (input) => {
+      let size = parseInt(input.split(" "));
+      resolve(size);
+    });
+  });
 };
 
 //?   Get elements that will be set as the value of node....!!
@@ -93,9 +98,10 @@ const getRange = () => {
 
 //?   getNodeValues() and getRange() function Call Synchronously
 const getAllInput = async () => {
+  const size = await getSize();
   const values = await getNodeValues();
   const range = await getRange();
-  createLinkedList(values, range);
+  createLinkedList(size, values, range);
 
   rl.close();
 };
