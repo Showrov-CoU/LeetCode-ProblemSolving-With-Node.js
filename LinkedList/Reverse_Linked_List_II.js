@@ -37,9 +37,17 @@ class LinkedList {
 
 //?   Reverse linked list Between position left to position right
 const reverseBetween = ({ head }, left, right) => {
-  if (head === null || left === right) return head;
+  //? added a dummy node named as newHead before head and newHead->head
+  let dummy = new LinkedList();
+  dummy.add(0);
+  let { head: newHead } = dummy;
+  newHead.next = head;
 
-  let nodeBeforeLeft = head;
+  if (newHead.next.next === null || left === right) {
+    return newHead.next;
+  }
+
+  let nodeBeforeLeft = newHead;
   let i = 1;
 
   while (i < left) {
@@ -55,14 +63,12 @@ const reverseBetween = ({ head }, left, right) => {
     nodeBeforeLeft.next = extractNode;
     left++;
   }
-  // console.log(head.next);
-  return head.next;
+  return newHead.next;
 };
 
 //?   create Linked list based on LinkedList and Node class
 const createLinkedList = (values, range) => {
   let list = new LinkedList();
-  list.add(0);
   for (let value of values) {
     list.add(value);
   }
